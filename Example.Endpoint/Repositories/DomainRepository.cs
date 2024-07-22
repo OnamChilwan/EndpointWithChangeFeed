@@ -15,6 +15,11 @@ public class DomainRepository
         _eventStore = new EventStore(storageEngine);
     }
 
+    public DomainRepository(IStorageEngine engine)
+    {
+        _eventStore = new EventStore(engine);
+    }
+
     public async Task<AggregateRoot> Load(string id)
     {
         var stream = await _eventStore.ReadStreamForwards(id);
