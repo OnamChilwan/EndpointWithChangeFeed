@@ -2,6 +2,7 @@
 using Example.Endpoint.Commands;
 using Example.Endpoint.Configuration;
 using Example.Endpoint.Installers;
+using Example.Endpoint.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
