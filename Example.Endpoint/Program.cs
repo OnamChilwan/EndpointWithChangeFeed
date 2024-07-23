@@ -1,25 +1,26 @@
-﻿using Example.Endpoint.Aggregates;
-using Example.Endpoint.Commands;
+﻿using Example.Domain.Aggregates;
+using Example.Domain.Repositories;
 using Example.Endpoint.Configuration;
 using Example.Endpoint.Installers;
-using Example.Endpoint.Repositories;
+using Example.Messages.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wolverine;
 using Wolverine.AzureServiceBus;
 
-var repo = new DomainRepository();
-
-var ag = new AggregateRoot();
-ag.DoSomething();
-await repo.Save(ag);
-
-var x = await repo.Load("123");
-x.DoSomethingElse();
-await repo.Save(x);
-
-var y = await repo.Load("123");
+// TODO: This is test code
+// var repo = new DomainRepository();
+//
+// var ag = new CustomerAggregate();
+// ag.DoSomething();
+// await repo.Save(ag);
+//
+// var x = await repo.Load("123");
+// x.DoSomethingElse();
+// await repo.Save(x);
+//
+// var y = await repo.Load("123");
 
 using var host = Host
     .CreateDefaultBuilder()
@@ -35,7 +36,7 @@ using var host = Host
         var applicationSettings = context.Configuration.GetSection(nameof(ApplicationSettings)).Get<ApplicationSettings>();
         options.ConfigureEndpoint(applicationSettings!);
         
-        options.PublishMessage<HelloWorldCommand>().ToAzureServiceBusQueue("foo-queue"); // TODO: delete
+        options.PublishMessage<SendSmsCommand>().ToAzureServiceBusQueue("foo-queue"); // TODO: delete
     })
     .Build();
 

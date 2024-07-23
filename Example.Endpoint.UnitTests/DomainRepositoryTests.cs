@@ -1,5 +1,6 @@
-using Example.Endpoint.Aggregates;
-using Example.Endpoint.Repositories;
+using Example.Domain.Aggregates;
+using Example.Domain.Models;
+using Example.Domain.Repositories;
 using FluentAssertions;
 using SimpleEventStore.InMemory;
 
@@ -19,17 +20,16 @@ public class DomainRepositoryTests
     public async Task Given_Aggregate_Exists_When_Loading_Then_Aggregate_Is_Loaded_Correctly()
     {
         const string id = "123";
-        var aggregateRoot = new AggregateRoot();
+        var aggregateRoot = new CustomerAggregate();
         
-        aggregateRoot.DoSomething();
-        aggregateRoot.DoSomethingElse();
+        aggregateRoot.CustomerNotified(new CustomerNotificationResult(true, "123", "Message"));
 
         await _subject.Save(aggregateRoot);
 
         var result = await _subject.Load(id);
         
         result.Id.Should().Be("123");
-        result.Message.Should().Be("Blah");
+        result.HasReceivedNotification.Should().BeTrue();
         result.UncommittedEvents.Should().BeEmpty();
     }
 

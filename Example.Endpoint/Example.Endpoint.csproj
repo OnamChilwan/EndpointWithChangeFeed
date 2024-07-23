@@ -19,4 +19,9 @@
         <PackageReference Include="WolverineFx.FluentValidation" Version="2.15.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Example.Domain\Example.Domain.csproj" />
+      <ProjectReference Include="..\Example.Messages\Example.Messages.csproj" />
+    </ItemGroup>
+
 </Project>
